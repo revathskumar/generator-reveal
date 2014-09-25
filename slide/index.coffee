@@ -42,11 +42,14 @@ module.exports = class SlideGenerator extends yeoman.generators.NamedBase
             else
                 @template 'slide.html', "slides/#{@filename}"
 
+        position = list.length - 2
         if @options.attributes
             @log.info "Appending slides/#{@filename} to slides/list.json."
-            list.push filename: @filename, attr: 'data-background': '#ff0000'
+            list.splice(position, 0, {filename: @filename, attr: 'data-background': '#ff0000'});
+            # list.push filename: @filename, attr: 'data-background': '#ff0000'
         else
             @log.info "Appending slides/#{@filename} to slides/list.json."
-            list.push @filename
+            list.splice position, 0, @filename
+            # list.push @filename
 
         fs.writeFileSync fullPath, JSON.stringify list, null, 4
