@@ -94,6 +94,13 @@ module.exports = class RevealGenerator extends yeoman.generators.Base
 
         @copy 'theme.scss', 'css/source/theme.scss' if @config.get 'useSass'
 
+
+        @template '_about.md', 'slides/about.md'
+        @copy 'images/questions-paper.jpg', 'images/questions-paper.jpg'
+        @copy 'images/whatznear-1.png', 'images/whatznear-1.png'
+        @copy 'images/yeoman.png', 'images/yeoman.png'
+        @copy 'css/custom.css', 'css/custom.css'
+
     projectfiles: ->
         @copy 'editorconfig', '.editorconfig'
         @copy 'jshintrc', '.jshintrc'

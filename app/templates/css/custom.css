@@ -1,0 +1,16 @@
+.reveal pre.custom{
+  width: 100%;
+  font-size:1em;
+}
+
+.imp{
+  color: #F74F4F !important;
+}
+
+.info{
+  color: #73B2F5 !important;
+}
+
+.warn{
+  color: #F2F224  !important;
+}

@@ -1,10 +1,10 @@
 
 # <%= config.get('presentationTitle') %>
 
-From the terminal, pop in:
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
 
-  ```yo reveal:slide "Slide Title"```
-
-Available options:
-
- ```--markdown --attributes --notes```
+<span style="font-size:50px"> @revathskumar </span>
