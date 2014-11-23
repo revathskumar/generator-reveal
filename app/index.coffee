@@ -10,8 +10,8 @@ module.exports = class RevealGenerator extends yeoman.generators.Base
     constructor: (args, options) ->
         yeoman.generators.Base.apply @, arguments
 
-        @pkg = JSON.parse @readFileAsString path.join __dirname, '../package.json'
-        @config.set 'themes', JSON.parse @readFileAsString path.join __dirname, './theme_choices.json'
+        @pkg = @fs.readJSON path.join __dirname, '../package.json'
+        @config.set 'themes', @fs.readJSON path.join __dirname, './theme_choices.json'
         # Setup config defaults.
         @config.defaults
             presentationTitle: 'Reveal.js and Yeoman is Awesomeness'
@@ -56,7 +56,7 @@ module.exports = class RevealGenerator extends yeoman.generators.Base
             }
             {
                 name: 'revealTheme'
-                type: 'rawlist'
+                type: 'list'
                 message: 'What Reveal.js theme would you like to use?'
                 when: (props) ->
                       return !props.useSass
@@ -96,23 +96,23 @@ module.exports = class RevealGenerator extends yeoman.generators.Base
             cb()
 
     app: ->
-        @template '_index.md', 'slides/index.md'
-        @template '_Gruntfile.coffee', 'Gruntfile.coffee'
-        @template '__index.html', 'templates/_index.html'
-        @template '__section.html', 'templates/_section.html'
-        @template '_package.json', 'package.json'
-        @template '_bower.json', 'bower.json'
-        @copy 'loadhtmlslides.js', 'js/loadhtmlslides.js'
-        @copy 'list.json', 'slides/list.json'
+        @fs.copyTpl @templatePath('_index.md'), @destinationPath('slides/index.md'), this
+        @fs.copyTpl @templatePath('_Gruntfile.coffee'), @destinationPath('Gruntfile.coffee'), this
+        @fs.copyTpl @templatePath('__index.html'), @destinationPath('templates/_index.html'), this
+        @fs.copyTpl @templatePath('__section.html'), @destinationPath('templates/_section.html'), this
+        @fs.copyTpl @templatePath('_package.json'), @destinationPath('package.json'), this
+        @fs.copyTpl @templatePath('_bower.json'), @destinationPath('bower.json'), this
+        @fs.copy @templatePath('loadhtmlslides.js'), @destinationPath('js/loadhtmlslides.js')
+        @fs.copy @templatePath('list.json'), @destinationPath('slides/list.json')
 
-        @copy 'theme.scss', 'css/source/theme.scss' if @config.get 'useSass'
+        @fs.copy @templatePath('theme.scss'), @destinationPath('css/source/theme.scss') if @config.get 'useSass'
 
     projectfiles: ->
-        @copy 'editorconfig', '.editorconfig'
-        @copy 'jshintrc', '.jshintrc'
+        @fs.copy @templatePath('editorconfig'), @destinationPath('.editorconfig')
+        @fs.copy @templatePath('jshintrc'), @destinationPath('.jshintrc')
 
     runtime: ->
-        @copy 'bowerrc', '.bowerrc'
-        @copy 'gitignore', '.gitignore'
+        @fs.copy @templatePath('bowerrc'), @destinationPath('.bowerrc')
+        @fs.copy @templatePath('gitignore'), @destinationPath('.gitignore')
 
 
