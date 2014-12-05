@@ -151,6 +151,23 @@ module.exports = (grunt) ->
             'copy'
         ]
 
+    grunt.registerTask 'build_pdf', ->
+
+        childProcess  = require('child_process')
+        phantomjs     = require('phantomjs')
+        binPath       = phantomjs.path
+        done          = grunt.task.current.async()
+
+        childArgs = [
+           'bower_components/reveal.js/plugin/print-pdf/print-pdf.js',
+           'http://localhost:9000/index.html?print-pdf',
+           '<%= _.slugify(config.get('presentationTitle')) %>.pdf'
+        ];
+
+        childProcess.execFile binPath, childArgs, (error, stdout, stderr) ->
+           grunt.log.writeln(stdout);
+           done(error);
+
     <% if (config.get('deployToGithubPages')) { %>
     grunt.registerTask 'deploy',
         'Deploy to Github Pages', [
